@@ -128,6 +128,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="PolkupyoraRekisteri.cpp" />
+    <ClCompile Include="bicycle.cpp" />
+    <ClCompile Include="velomobile.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="bicycle.h" />
+    <ClInclude Include="velomobile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

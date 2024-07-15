@@ -18,5 +18,19 @@
     <ClCompile Include="PolkupyoraRekisteri.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="bicycle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="velomobile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="bicycle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="velomobile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
