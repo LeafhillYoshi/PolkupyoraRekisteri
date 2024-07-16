@@ -13,13 +13,21 @@ public:
 	Bicycle();
 
 	void setBrand(const std::string& brand);
+	std::string getBrand() const;
 	void setModel(const std::string& model);
+	std::string getModel() const;
 	void setYear(int year);
+	int getYear() const;
 	void setFrameSize(const std::string& frameSize);
+	std::string getFrameSize() const;
 	void setWheelSize(const std::string& wheelSize);
+	std::string getWheelSize() const;
 	void setWheelAmount(int wheelAmount);
+	int getWheelAmount() const;
 	void setFrameNumber(const std::string& frameNumber);
+	std::string getFrameNumber() const;
 	void setBikeType(const std::string& bikeType);
+	std::string getBikeType() const;
 
 protected:
 	std::string brand;

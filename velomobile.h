@@ -12,7 +12,7 @@ class Velomobile : public Bicycle
 {
 public:
     // Constructor
-    Velomobile() {}
+    Velomobile();
     void setWheelAmount(int wheelAmount);
     void setBikeType(std::string bikeType);
 

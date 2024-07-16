@@ -1,2 +1,2 @@
-﻿  velomobile.cpp
-C:\Users\Jani\Documents\Koulu\Cplusplus-kurssi\PolkupyoraRekisteri\PolkupyoraRekisteri\velomobile.cpp(7,13): error C2084: function 'Velomobile::Velomobile(void)' already has a body
+﻿  PolkupyoraRekisteri.cpp
+  PolkupyoraRekisteri.vcxproj -> C:\Users\Jani\Documents\Koulu\Cplusplus-kurssi\PolkupyoraRekisteri\x64\Debug\PolkupyoraRekisteri.exe
