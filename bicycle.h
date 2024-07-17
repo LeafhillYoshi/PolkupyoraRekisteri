@@ -12,6 +12,8 @@ class Bicycle
 public:
 	Bicycle();
 
+	void setId(const std::string& id);
+	std::string getId() const;
 	void setBrand(const std::string& brand);
 	std::string getBrand() const;
 	void setModel(const std::string& model);
@@ -30,6 +32,7 @@ public:
 	std::string getBikeType() const;
 
 protected:
+	std::string id;
 	std::string brand;
 	std::string model;
 	int year;

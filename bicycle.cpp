@@ -11,6 +11,14 @@ Bicycle::Bicycle() : brand(brand), model(model), year(year = 0),
     wheelAmount(2), frameNumber(frameNumber) {}
 
 // Setter methods implementation
+void Bicycle::setId(const std::string& id) {
+	this->id = id;
+}
+
+string Bicycle::getId() const {
+	return id;
+}
+
 void Bicycle::setBrand(const std::string& brand) {
     this->brand = brand;
 }

@@ -10,6 +10,61 @@
 
 using namespace std;
 
+void saveLastId(const string& lastId) {
+    ofstream outFile("lastId.txt");
+    if (outFile) {
+        outFile << lastId;
+    }
+    else {
+        cerr << "Error saving the last ID." << endl;
+    }
+}
+
+string loadLastId() {
+    ifstream inFile("lastId.txt");
+    string lastId;
+    if (inFile) {
+        inFile >> lastId;
+    }
+    else {
+        cerr << "Error loading the last ID." << endl;
+    }
+    return lastId;
+}
+
+string generateId() {
+    string lastId = loadLastId();
+
+    if (lastId.empty()) {
+		return "AA-111";
+	}
+
+    string prefix = lastId.substr(0, 2);
+    int number = stoi(lastId.substr(3, 3));
+
+    if (number < 999) {
+        number++;
+    }
+    else {
+        number = 111;
+        if (prefix[1] < 'Z') {
+            prefix[1]++;
+        }
+        else if (prefix[0] < 'Z') {
+			prefix[1] = 'A';
+            prefix[0]++;
+		}
+		else
+        {
+			std::cerr << "Error: Cannot generate more IDs." << std::endl;
+            return "";
+		}
+    }
+    lastId = prefix + "-" + to_string(number);
+    saveLastId(lastId);
+    return lastId;
+}
+
 void saveBicyclesToFile(const std::vector<Bicycle>& bicycles, const std::string& filename) {
     std::ofstream file(filename);
     if (!file.is_open()) {
@@ -18,7 +73,8 @@ void saveBicyclesToFile(const std::vector<Bicycle>& bicycles, const std::string&
     }
 
     for (const auto& bike : bicycles) {
-        file << bike.getBrand() << ","
+        file << bike.getId() << ","
+            << bike.getBrand() << ","
             << bike.getModel() << ","
             << bike.getYear() << ","
             << bike.getFrameSize() << ","
@@ -41,9 +97,10 @@ void loadBicyclesFromFile(vector<Bicycle>& bicycles, const string& filename) {
     std::string line;
     while (getline(file, line)) {
         stringstream ss(line);
-        string brand, model, frameSize, wheelSize, frameNumber, bikeType;
+        string id, brand, model, frameSize, wheelSize, frameNumber, bikeType;
         int year, wheelAmount;
 
+        getline(ss, id, ',');
         getline(ss, brand, ',');
         getline(ss, model, ',');
         ss >> year;
@@ -56,6 +113,7 @@ void loadBicyclesFromFile(vector<Bicycle>& bicycles, const string& filename) {
         getline(ss, bikeType);
 
         Bicycle bike;
+        bike.setId(id);
         bike.setBrand(brand);
         bike.setModel(model);
         bike.setYear(year);
@@ -109,7 +167,7 @@ int main()
                 switch (subChoice) {
                 case 1:
                     {
-                    string brand, model, frameSize, wheelSize, frameNumber, bikeType;
+                    string id, brand, model, frameSize, wheelSize, frameNumber, bikeType;
                     int year, wheelAmount;
                     cout << "Lisää polkupyörän tiedot" << endl;
                     cout << "Merkki: ";
@@ -129,7 +187,10 @@ int main()
                     cout << "Pyörätyyppi: ";
                     cin >> bikeType;
 
+                    id = generateId();
+
                     bicycles.push_back(Bicycle());
+                    bicycles.back().setId(id);
                     bicycles.back().setBrand(brand);
                     bicycles.back().setModel(model);
                     bicycles.back().setYear(year);
@@ -139,7 +200,7 @@ int main()
                     bicycles.back().setFrameNumber(frameNumber);
                     bicycles.back().setBikeType(bikeType);
 
-                    cout << "Polkupyörä: " << brand << " " << model << "vuodelta : " << year << " lisätty" << endl;
+                    cout << "Rekisteritunnus: " << id << ", Polkupyörä: " << brand << " " << model << "vuodelta : " << year << " lisätty" << endl;
                     }
                     break;
                 case 2:
@@ -159,11 +220,13 @@ int main()
                 cout << "Ei polkupyöriä rekisterissä." << endl;
             }
             else {
+                int lineNumber = 1;
                 for (const auto& bike : bicycles) {
-                    cout << "Merkki: " << bike.getBrand() << ", Malli: " << bike.getModel()
+                    cout << lineNumber << ". Rekisteritunnus: "<< bike.getId() << ", Merkki: " << bike.getBrand() << ", Malli: " << bike.getModel()
                         << ", Vuosi: " << bike.getYear() << ", Runkokoko: " << bike.getFrameSize()
                         << ", Pyörien koko: " << bike.getWheelSize() << ", Pyörien määrä: " << bike.getWheelAmount()
                         << ", Runkonumero: " << bike.getFrameNumber() << ", Pyörätyyppi: " << bike.getBikeType() << endl;
+                    lineNumber++;
                 }
             }
             break;
