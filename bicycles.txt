@@ -1,2 +1,3 @@
 AA-111,Peugeot,PGN-10,1985,L,28",2,123456,Maantiepy”r„
-AA-111,Insera,MX-P2,2005,M,26",2,123456,MTB
+AA-112,Insera,MX-P2,2005,M,26",2,123456,Maastopy”r„/T„ysjousto
+AA-113,Mondraker,Foxy Carbon R,2024,L,29x2.5",2,123456,Maastopy”r„/T„ysjousto

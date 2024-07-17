@@ -14,6 +14,7 @@ void saveLastId(const string& lastId) {
     ofstream outFile("lastId.txt");
     if (outFile) {
         outFile << lastId;
+        outFile.close();
     }
     else {
         cerr << "Error saving the last ID." << endl;
@@ -25,6 +26,7 @@ string loadLastId() {
     string lastId;
     if (inFile) {
         inFile >> lastId;
+        inFile.close();
     }
     else {
         cerr << "Error loading the last ID." << endl;
@@ -36,6 +38,8 @@ string generateId() {
     string lastId = loadLastId();
 
     if (lastId.empty()) {
+        lastId = "AA-111";
+        saveLastId(lastId);
 		return "AA-111";
 	}
 
@@ -136,7 +140,8 @@ int main()
 
     loadBicyclesFromFile(bicycles, filename);
 
-    int valinta;
+    int valinta
+        ;
     
     do
     {
@@ -145,17 +150,14 @@ int main()
         cout << "2. Näytä polkupyörät" <<  endl;
         cout << "3. Poista polkupyörä" <<  endl;
         cout << "4. Muokkaa pyörien tietoja" <<  endl;
-        /*
-        cout << "5. Tallenna rekisterin tiedot" << endl;
-        cout << "6. Lataa rekisteri" << endl;
-        */
         cout << "0. Lopeta" <<  endl;
         cout << "Valitse toiminto: ";
         cin >> valinta;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         switch (valinta)
         {
         case 1:
-             cout << "Lisää polkupyörä" <<  endl;
+            cout << "Lisää polkupyörä" <<  endl;
             int subChoice;
             do {
                  cout << "1. Lisää polkupyörä" <<  endl;
@@ -163,6 +165,7 @@ int main()
                  cout << "0. Palaa päävalikkoon" <<  endl;
                  cout << "Enter your choice: ";
                  cin >> subChoice;
+                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
                 switch (subChoice) {
                 case 1:
@@ -171,36 +174,38 @@ int main()
                     int year, wheelAmount;
                     cout << "Lisää polkupyörän tiedot" << endl;
                     cout << "Merkki: ";
-                    cin >> brand;
+                    getline(cin, brand);
                     cout << "Malli: ";
-                    cin >> model;
+                    getline(cin, model);
                     cout << "Vuosi: ";
                     cin >> year;
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     cout << "Runkokoko: ";
-                    cin >> frameSize;
+                    getline(cin, frameSize);
                     cout << "Pyörien koko: ";
-                    cin >> wheelSize;
-                    cout << "Pyörien määrä: ";
-                    cin >> wheelAmount;
+                    getline(cin, wheelSize);
                     cout << "Runkonumero: ";
-                    cin >> frameNumber;
+                    getline(cin, frameNumber);
                     cout << "Pyörätyyppi: ";
-                    cin >> bikeType;
+                    getline(cin, bikeType);
 
                     id = generateId();
+                    wheelAmount = 2;
 
-                    bicycles.push_back(Bicycle());
-                    bicycles.back().setId(id);
-                    bicycles.back().setBrand(brand);
-                    bicycles.back().setModel(model);
-                    bicycles.back().setYear(year);
-                    bicycles.back().setFrameSize(frameSize);
-                    bicycles.back().setWheelSize(wheelSize);
-                    bicycles.back().setWheelAmount(wheelAmount);
-                    bicycles.back().setFrameNumber(frameNumber);
-                    bicycles.back().setBikeType(bikeType);
+                    Bicycle bike;
+                    bike.setId(id);
+                    bike.setBrand(brand);
+                    bike.setModel(model);
+                    bike.setYear(year);
+                    bike.setFrameSize(frameSize);
+                    bike.setWheelSize(wheelSize);
+                    bike.setWheelAmount(wheelAmount);
+                    bike.setFrameNumber(frameNumber);
+                    bike.setBikeType(bikeType);
 
-                    cout << "Rekisteritunnus: " << id << ", Polkupyörä: " << brand << " " << model << "vuodelta : " << year << " lisätty" << endl;
+                    bicycles.push_back(bike);
+
+                    cout << "Rekisteritunnus: " << id << ", Polkupyörä: " << brand << " " << model << " vuodelta : " << year << " lisätty" << endl;
                     }
                     break;
                 case 2:
@@ -236,12 +241,6 @@ int main()
         case 4:
              cout << "Muokkaa pyörien tietoja" <<  endl;
             break;
-            /*
-        case 5:
-            cout << "Tallenna rekisteri" << endl;
-        case 6:
-            cout << "Lataa rekisteri" << endl;
-            */
         case 0:
              cout << "Lopeta" <<  endl;
             break;
