@@ -1,3 +1,6 @@
 AA-111,Peugeot,PGN-10,1985,L,28",2,123456,Maantiepy”r„
 AA-112,Insera,MX-P2,2005,M,26",2,123456,Maastopy”r„/T„ysjousto
-AA-113,Mondraker,Foxy Carbon R,2024,L,29x2.5",2,123456,Maastopy”r„/T„ysjousto
+AA-114,Kona,Unit,2024,S,29x2.6",2,123654,Maastopy”r„
+AA-115,Kona,Rove ST DL,2024,50cm,650x47c,2,456123,Gravel
+AA-116,Kona,Honzo,2023,M,29x2.4",2,321654,Maastopy”r„/T„ysjousto
+AA-117,Velomtek,VT-1,2024,Null,20x1.5",3,098765,Velomobiili

@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 #include "bicycle.h"
 #include "velomobile.h"
 
@@ -87,7 +88,7 @@ void saveBicyclesToFile(const std::vector<Bicycle>& bicycles, const std::string&
             << bike.getFrameNumber() << ","
             << bike.getBikeType() <<  endl;
     }
-
+    cout << "Tiedot tallennettu." << endl;
     file.close();
 }
 
@@ -150,6 +151,7 @@ int main()
         cout << "2. Näytä polkupyörät" <<  endl;
         cout << "3. Poista polkupyörä" <<  endl;
         cout << "4. Muokkaa pyörien tietoja" <<  endl;
+        cout << "5. Tallenna tietokanta" <<  endl;
         cout << "0. Lopeta" <<  endl;
         cout << "Valitse toiminto: ";
         cin >> valinta;
@@ -157,19 +159,19 @@ int main()
         switch (valinta)
         {
         case 1:
-            cout << "Lisää polkupyörä" <<  endl;
+            cout << "Lisää polkupyörä" << endl;
             int subChoice;
             do {
-                 cout << "1. Lisää polkupyörä" <<  endl;
-                 cout << "2. Lisää velomobiili" <<  endl;
-                 cout << "0. Palaa päävalikkoon" <<  endl;
-                 cout << "Enter your choice: ";
-                 cin >> subChoice;
-                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "1. Lisää polkupyörä" << endl;
+                cout << "2. Lisää velomobiili" << endl;
+                cout << "0. Palaa päävalikkoon" << endl;
+                cout << "Enter your choice: ";
+                cin >> subChoice;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
                 switch (subChoice) {
                 case 1:
-                    {
+                {
                     string id, brand, model, frameSize, wheelSize, frameNumber, bikeType;
                     int year, wheelAmount;
                     cout << "Lisää polkupyörän tiedot" << endl;
@@ -206,16 +208,54 @@ int main()
                     bicycles.push_back(bike);
 
                     cout << "Rekisteritunnus: " << id << ", Polkupyörä: " << brand << " " << model << " vuodelta : " << year << " lisätty" << endl;
-                    }
-                    break;
+                }
+                break;
                 case 2:
-                    // Handle Suboption 2
+                {
+                    string id, brand, model, frameSize, wheelSize, frameNumber, bikeType;
+                    int year, wheelAmount;
+                    cout << "Lisää velomobiilin tiedot" << endl;
+                    cout << "Merkki: ";
+                    getline(cin, brand);
+                    cout << "Malli: ";
+                    getline(cin, model);
+                    cout << "Vuosi: ";
+                    cin >> year;
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Runkokoko: ";
+                    getline(cin, frameSize);
+                    cout << "Renkaan koko: ";
+                    getline(cin, wheelSize);
+                    cout << "Renkaiden määrä: ";
+                    cin >> wheelAmount;
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout << "Runkonumero: ";
+                    getline(cin, frameNumber);
+
+                    bikeType = "Velomobiili";
+                    id = generateId();
+
+                    Velomobile velo;
+                    velo.setId(id);
+                    velo.setBrand(brand);
+                    velo.setModel(model);
+                    velo.setYear(year);
+                    velo.setFrameSize(frameSize);
+                    velo.setWheelSize(wheelSize);
+                    velo.setWheelAmount(wheelAmount);
+                    velo.setFrameNumber(frameNumber);
+                    velo.setBikeType(bikeType);
+
+                    bicycles.push_back(velo);
+                    cout << "Rekisteritunnus: " << id << ", Velomobiili: " << brand << " " << model << " vuodelta : " << year << " lisätty" << endl;
+
                     break;
+                }
                 case 0:
-                     cout << "Returning to Main Menu...\n";
+                    cout << "Returning to Main Menu...\n";
                     break;
                 default:
-                     cout << "Invalid choice. Please try again.\n";
+                    cout << "Invalid choice. Please try again.\n";
                 }
             } while (subChoice != 0);
             break;
@@ -227,7 +267,7 @@ int main()
             else {
                 int lineNumber = 1;
                 for (const auto& bike : bicycles) {
-                    cout << lineNumber << ". Rekisteritunnus: "<< bike.getId() << ", Merkki: " << bike.getBrand() << ", Malli: " << bike.getModel()
+                    cout << lineNumber << ". Rekisteritunnus: " << bike.getId() << ", Merkki: " << bike.getBrand() << ", Malli: " << bike.getModel()
                         << ", Vuosi: " << bike.getYear() << ", Runkokoko: " << bike.getFrameSize()
                         << ", Pyörien koko: " << bike.getWheelSize() << ", Pyörien määrä: " << bike.getWheelAmount()
                         << ", Runkonumero: " << bike.getFrameNumber() << ", Pyörätyyppi: " << bike.getBikeType() << endl;
@@ -236,16 +276,109 @@ int main()
             }
             break;
         case 3:
-             cout << "Poista polkupyörä" <<  endl;
-            break;
+        {
+            cout << "Poista polkupyörä" << endl;
+            if (bicycles.empty()) {
+                cout << "Ei polkupyöriä rekisterissä." << endl;
+            }
+            else {
+                string idToDelete;
+                cout << "Anna poistettavan polkupyörän rekisteritunnus: ";
+                getline(cin, idToDelete);
+                auto it = find_if(bicycles.begin(), bicycles.end(), [idToDelete](const Bicycle& bike) {
+                    return bike.getId() == idToDelete;
+                    });
+                if (it != bicycles.end()) {
+                    bicycles.erase(it);
+                    cout << "Polkupyörä rekisteritunnuksella " << idToDelete << " poistettu." << endl;
+                }
+                else {
+                    cout << "Polkupyörää rekisteritunnuksella " << idToDelete << " ei löytynyt." << endl;
+                }
+                break;
+            }
+        }
         case 4:
-             cout << "Muokkaa pyörien tietoja" <<  endl;
+        {
+            cout << "Muokkaa pyörien tietoja" << endl;
+
+            if (bicycles.empty()) {
+                cout << "Ei polkupyöriä rekisterissä." << endl;
+                break;
+            }
+
+            string idToEdit;
+            cout << "Anna muokattavan polkupyörän rekisteritunnus: ";
+            getline(cin, idToEdit);
+
+            auto it = find_if(bicycles.begin(), bicycles.end(), [&idToEdit](const Bicycle& bike) {
+                return bike.getId() == idToEdit;
+                });
+
+            if (it != bicycles.end()) {
+                cout << "Nykyiset tiedot: " << endl;
+                cout << "Rekisteritunnus: " << it->getId() << ", Merkki: " << it->getBrand() << ", Malli: " << it->getModel()
+                    << ", Vuosi: " << it->getYear() << ", Runkokoko: " << it->getFrameSize()
+                    << ", Pyörien koko: " << it->getWheelSize() << ", Pyörien määrä: " << it->getWheelAmount()
+                    << ", Runkonumero: " << it->getFrameNumber() << ", Pyörätyyppi: " << it->getBikeType() << endl;
+
+                string brand, model, frameSize, wheelSize, frameNumber, bikeType;
+                int year;
+
+                cout << "Anna uusi merkki (tyhjä syöte ohittaa): ";
+                getline(cin, brand);
+                if (!brand.empty()) {
+                    it->setBrand(brand);
+                }
+                cout << "Anna uusi malli (tyhjä syöte ohittaa): ";
+                getline(cin, model);
+                if (!model.empty()) {
+                    it->setModel(model);
+                }
+                cout << "Anna uusi vuosi (0 ohittaa): ";
+                cin >> year;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                if (year != 0) {
+                    it->setYear(year);
+                }
+                cout << "Anna uusi runkokoko (tyhjä syöte ohittaa): ";
+                getline(cin, frameSize);
+                if (!frameSize.empty()) {
+                    it->setFrameSize(frameSize);
+                }
+                cout << "Anna uusi pyörien koko (tyhjä syöte ohittaa): ";
+                getline(cin, wheelSize);
+                if (!wheelSize.empty()) {
+                    it->setWheelSize(wheelSize);
+                }
+
+                cout << "Anna uusi runkonumero (tyhjä syöte ohittaa): ";
+                getline(cin, frameNumber);
+                if (!frameNumber.empty()) {
+                    it->setFrameNumber(frameNumber);
+                }
+                cout << "Anna uusi pyörätyyppi (tyhjä syöte ohittaa): ";
+                getline(cin, bikeType);
+                if (!bikeType.empty()) {
+                    it->setBikeType(bikeType);
+                }
+
+                cout << "Tiedot päivitetty." << endl;
+            }
+            else {
+                cout << "Polkupyörää rekisteritunnuksella " << idToEdit << " ei löytynyt." << endl;
+            }
+            break;
+        }
+        case 5:
+            cout << "Tallenna tietokanta" << endl;
+            saveBicyclesToFile(bicycles, filename);
             break;
         case 0:
-             cout << "Lopeta" <<  endl;
+            cout << "Lopeta" << endl;
             break;
         default:
-             cout << "Tuntematon valinta" <<  endl;
+            cout << "Tuntematon valinta" << endl;
             break;
         }
     } while (valinta != 0);
