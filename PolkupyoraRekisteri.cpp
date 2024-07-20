@@ -6,6 +6,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <clocale>
 #include "bicycle.h"
 #include "velomobile.h"
 
@@ -136,6 +137,7 @@ void loadBicyclesFromFile(vector<Bicycle>& bicycles, const string& filename) {
 
 int main()
 {
+    setlocale(LC_ALL, "fi-FI");
     vector<Bicycle> bicycles;
     string filename = "bicycles.txt";
 
