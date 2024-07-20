@@ -190,8 +190,62 @@ int main()
                     getline(cin, wheelSize);
                     cout << "Runkonumero: ";
                     getline(cin, frameNumber);
-                    cout << "Pyörätyyppi: ";
-                    getline(cin, bikeType);
+                    int bikeTypeChoice;
+                    cout << "1. Maantiepyörä" << endl;
+                    cout << "2. Kaupunkipyörä" << endl;
+                    cout << "3. Hybridi" << endl;
+                    cout << "4. Lastenpyörä" << endl;
+                    cout << "5. Taittopyörä" << endl;
+                    cout << "6. Maastopyörä" << endl;
+                    cout << "7. Maastopyörä/Täysjousto" << endl;
+                    cout << "8. Retkipyörä" << endl;
+                    cout << "9. Fatbike" << endl;
+                    cout << "10. Kilpapyörä" << endl;
+                    cout << "11. Sähköpyörä" << endl;
+                    cout << "12. Muu" << endl;
+                    cout << "Valitse pyörätyyppi: ";
+
+                    cin >> bikeTypeChoice;
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    switch (bikeTypeChoice) {
+                    case 1:
+                        bikeType = "Maantiepyörä";
+                        break;
+                    case 2:
+                        bikeType = "Kaupunkipyörä";
+                        break;
+                    case 3:
+                        bikeType = "Hybridi";
+                        break;
+                    case 4:
+                        bikeType = "Lastenpyörä";
+                        break;
+                    case 5:
+                        bikeType = "Taittopyörä";
+                        break;
+                    case 6:
+                        bikeType = "Maastopyörä";
+                        break;
+                    case 7:
+                        bikeType = "Maastopyörä/Täysjousto";
+                        break;
+                    case 8:
+                        bikeType = "Retkipyörä";
+                        break;
+                    case 9:
+                        bikeType = "Fatbike";
+                        break;
+                    case 10:
+                        bikeType = "Kilpapyörä";
+                        break;
+                    case 11:
+                        bikeType = "Sähköpyörä";
+                        break;
+                    case 12:
+                        bikeType = "Muu";
+                        break;
+                    }
+
 
                     id = generateId();
                     wheelAmount = 2;
