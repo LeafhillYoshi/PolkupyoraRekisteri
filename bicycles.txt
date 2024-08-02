@@ -5,3 +5,4 @@ AA-115,Kona,Rove ST DL,2024,50cm,650x47c,2,456123,Gravel
 AA-116,Kona,Honzo,2023,M,29x2.4",2,321654,Maastopyörä/Täysjousto
 AA-117,Velomtek,VT-1,2024,Null,20x1.5",3,098765,Velomobiili
 AA-118,Kona,Coco,2024,S,650x47c,2,6312876318,Hybridi
+AA-120,1,1,1,1,1,2,1,Maantiepyörä

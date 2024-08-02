@@ -363,68 +363,150 @@ int main()
                 break;
             }
 
-            string idToEdit;
-            cout << "Anna muokattavan polkupyörän rekisteritunnus: ";
-            getline(cin, idToEdit);
+            int editChoice;
+            cout << "1. Muokkaa polkupyörää" << endl;
+            cout << "2. Muokkaa velomobiilia" << endl;
+            cout << "0. Palaa päävalikkoon" << endl;
+            cout << "Valitse toiminto: ";
+            cin >> editChoice;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-            auto it = find_if(bicycles.begin(), bicycles.end(), [&idToEdit](const Bicycle& bike) {
-                return bike.getId() == idToEdit;
-                });
+            switch (editChoice) {
+            case 1:
+            {
+                string idToEdit;
+                cout << "Anna muokattavan polkupyörän rekisteritunnus: ";
+                getline(cin, idToEdit);
 
-            if (it != bicycles.end()) {
-                cout << "Nykyiset tiedot: " << endl;
-                cout << "Rekisteritunnus: " << it->getId() << ", Merkki: " << it->getBrand() << ", Malli: " << it->getModel()
-                    << ", Vuosi: " << it->getYear() << ", Runkokoko: " << it->getFrameSize()
-                    << ", Pyörien koko: " << it->getWheelSize() << ", Pyörien määrä: " << it->getWheelAmount()
-                    << ", Runkonumero: " << it->getFrameNumber() << ", Pyörätyyppi: " << it->getBikeType() << endl;
+                auto it = find_if(bicycles.begin(), bicycles.end(), [&idToEdit](const Bicycle& bike) {
+                    return bike.getId() == idToEdit;
+                    });
 
-                string brand, model, frameSize, wheelSize, frameNumber, bikeType;
-                int year;
+                if (it != bicycles.end()) {
+                    cout << "Nykyiset tiedot: " << endl;
+                    cout << "Rekisteritunnus: " << it->getId() << ", Merkki: " << it->getBrand() << ", Malli: " << it->getModel()
+                        << ", Vuosi: " << it->getYear() << ", Runkokoko: " << it->getFrameSize()
+                        << ", Pyörien koko: " << it->getWheelSize() << ", Pyörien määrä: " << it->getWheelAmount()
+                        << ", Runkonumero: " << it->getFrameNumber() << ", Pyörätyyppi: " << it->getBikeType() << endl;
 
-                cout << "Anna uusi merkki (tyhjä syöte ohittaa): ";
-                getline(cin, brand);
-                if (!brand.empty()) {
-                    it->setBrand(brand);
-                }
-                cout << "Anna uusi malli (tyhjä syöte ohittaa): ";
-                getline(cin, model);
-                if (!model.empty()) {
-                    it->setModel(model);
-                }
-                cout << "Anna uusi vuosi (0 ohittaa): ";
-                cin >> year;
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                if (year != 0) {
-                    it->setYear(year);
-                }
-                cout << "Anna uusi runkokoko (tyhjä syöte ohittaa): ";
-                getline(cin, frameSize);
-                if (!frameSize.empty()) {
-                    it->setFrameSize(frameSize);
-                }
-                cout << "Anna uusi pyörien koko (tyhjä syöte ohittaa): ";
-                getline(cin, wheelSize);
-                if (!wheelSize.empty()) {
-                    it->setWheelSize(wheelSize);
-                }
+                    string brand, model, frameSize, wheelSize, frameNumber, bikeType;
+                    int year;
 
-                cout << "Anna uusi runkonumero (tyhjä syöte ohittaa): ";
-                getline(cin, frameNumber);
-                if (!frameNumber.empty()) {
-                    it->setFrameNumber(frameNumber);
-                }
-                cout << "Anna uusi pyörätyyppi (tyhjä syöte ohittaa): ";
-                getline(cin, bikeType);
-                if (!bikeType.empty()) {
-                    it->setBikeType(bikeType);
-                }
+                    cout << "Anna uusi merkki (tyhjä syöte ohittaa): ";
+                    getline(cin, brand);
+                    if (!brand.empty()) {
+                        it->setBrand(brand);
+                    }
+                    cout << "Anna uusi malli (tyhjä syöte ohittaa): ";
+                    getline(cin, model);
+                    if (!model.empty()) {
+                        it->setModel(model);
+                    }
+                    cout << "Anna uusi vuosi (0 ohittaa): ";
+                    cin >> year;
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    if (year != 0) {
+                        it->setYear(year);
+                    }
+                    cout << "Anna uusi runkokoko (tyhjä syöte ohittaa): ";
+                    getline(cin, frameSize);
+                    if (!frameSize.empty()) {
+                        it->setFrameSize(frameSize);
+                    }
+                    cout << "Anna uusi pyörien koko (tyhjä syöte ohittaa): ";
+                    getline(cin, wheelSize);
+                    if (!wheelSize.empty()) {
+                        it->setWheelSize(wheelSize);
+                    }
 
-                cout << "Tiedot päivitetty." << endl;
+                    cout << "Anna uusi runkonumero (tyhjä syöte ohittaa): ";
+                    getline(cin, frameNumber);
+                    if (!frameNumber.empty()) {
+                        it->setFrameNumber(frameNumber);
+                    }
+                    cout << "Anna uusi pyörätyyppi (tyhjä syöte ohittaa): ";
+                    getline(cin, bikeType);
+                    if (!bikeType.empty()) {
+                        it->setBikeType(bikeType);
+                    }
+
+                    cout << "Tiedot päivitetty." << endl;
+                }
+                else {
+                    cout << "Polkupyörää rekisteritunnuksella " << idToEdit << " ei löytynyt." << endl;
+                }
+                break;
             }
-            else {
-                cout << "Polkupyörää rekisteritunnuksella " << idToEdit << " ei löytynyt." << endl;
+            case 2:
+            {
+                string idToEdit;
+                cout << "Anna muokattavan velomobiilin rekisteritunnus: ";
+                getline(cin, idToEdit);
+
+                auto it = find_if(bicycles.begin(), bicycles.end(), [&idToEdit](const Bicycle& bike) {
+                    return bike.getId() == idToEdit;
+                    });
+
+                if (it != bicycles.end()) {
+                    cout << "Nykyiset tiedot: " << endl;
+                    cout << "Rekisteritunnus: " << it->getId() << ", Merkki: " << it->getBrand() << ", Malli: " << it->getModel()
+                        << ", Vuosi: " << it->getYear() << ", Runkokoko: " << it->getFrameSize()
+                        << ", Pyörien koko: " << it->getWheelSize() << ", Pyörien määrä: " << it->getWheelAmount()
+                        << ", Runkonumero: " << it->getFrameNumber() << ", Pyörätyyppi: " << it->getBikeType() << endl;
+
+                    string brand, model, frameSize, wheelSize, frameNumber;
+                    int year, wheelAmount;
+
+                    cout << "Anna uusi merkki (tyhjä syöte ohittaa): ";
+                    getline(cin, brand);
+                    if (!brand.empty()) {
+                        it->setBrand(brand);
+                    }
+                    cout << "Anna uusi malli (tyhjä syöte ohittaa): ";
+                    getline(cin, model);
+                    if (!model.empty()) {
+                        it->setModel(model);
+                    }
+                    cout << "Anna uusi vuosi (0 ohittaa): ";
+                    cin >> year;
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    if (year != 0) {
+                        it->setYear(year);
+                    }
+                    cout << "Anna uusi runkokoko (tyhjä syöte ohittaa): ";
+                    getline(cin, frameSize);
+                    if (!frameSize.empty()) {
+                        it->setFrameSize(frameSize);
+                    }
+                    cout << "Anna uusi pyörien koko (tyhjä syöte ohittaa): ";
+                    getline(cin, wheelSize);
+                    if (!wheelSize.empty()) {
+                        it->setWheelSize(wheelSize);
+                    }
+
+                    cout << "Anna uusi pyörien määrä (0 ohittaa): ";
+                    cin >> wheelAmount;
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    if (wheelAmount != 0) {
+                        it->setWheelAmount(wheelAmount);
+                    }
+
+                    cout << "Anna uusi runkonumero (tyhjä syöte ohittaa): ";
+                    getline(cin, frameNumber);
+                    if (!frameNumber.empty()) {
+                        it->setFrameNumber(frameNumber);
+                    }
+
+                    cout << "Tiedot päivitetty." << endl;
+                }
+                else {
+                    cout << "Polkupyörää rekisteritunnuksella " << idToEdit << " ei löytynyt." << endl;
+                }
+                break;
             }
-            break;
+            case 0:
+				break;
+            }
         }
         case 5:
             cout << "Tallenna tietokanta" << endl;
